@@ -66,7 +66,7 @@ def Fin_analysis(filename,summary):
                     # Next we skip the first row, where the header is expected anyway and we don't need those
                     if i == 1:
                         pass
-                    # Next we check for an empty line, or an empty line with whitespaces 
+                    # Next we check for an empty line or an empty line with whitespaces 
                     # (which is why using line == '\n' would not comprehensively solve the issue).
                     elif len(line.strip()) == 0:
                         print(f"Line # {i} is empty")
@@ -101,6 +101,8 @@ def Fin_analysis(filename,summary):
     print(f"Greatest Decrease in Profits: {profit_loss_low[0]} (${profit_loss_low[1]})")
 
     if summary:
+        print("----------------------------")
+        print("\ncreating summary file...")
         with open("summaryfile.txt", "w") as f2:
             f2.write("Financial Analysis\n----------------------------\n")
             f2.write(f"Total Months: {new_key}\n")
@@ -109,6 +111,7 @@ def Fin_analysis(filename,summary):
             f2.write(f"Greatest Increase in Profits: {profit_loss_high[0]} (${profit_loss_high[1]})\n")
             f2.write(f"Greatest Decrease in Profits: {profit_loss_low[0]} (${profit_loss_low[1]})\n")
         f2.close()
+        print("done.")
     return None 
 
 def main():
@@ -129,7 +132,7 @@ def main():
     # Set the filename variable to the user input file
     filename = args[0]
     # Call the fin_analysis function
-    complete_now = Fin_analysis(filename,summary)
+    Fin_analysis(filename,summary)
 
 
 
