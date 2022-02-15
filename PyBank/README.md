@@ -1,7 +1,7 @@
 ### PyBank Program
 * A simple program that goes through a .csv or .txt file and summarizes the profit/loss data along with the dates.
 * The program tracks peak profit, lowest profit (i.e. biggest loss), the average change in profit from month-to-month, along with outputing a summaryfile.txt
-* I included modules that check for data entry errors, for instance, if the program comes across a profit/loss = 14g569 -- it will return the line number and example to the user:
+* I included code that check for data entry errors, for instance, if the program comes across a profit/loss = 14g569 -- it will return the line number and example to the user:
      if budget_item_match:
                     <pre><code># Set a variable equal to our P/l as a string object, so that we can iterate through it real quick and make sure it fits the right format
                     check_pl_data = budget_item_match.group(2)
