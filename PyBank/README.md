@@ -19,7 +19,7 @@
 
 * The user can choose whether or not they want a summary file. To just run the output to the terminal, simply ommit the flag:          
 
-    '--summaryfile' 
+    <pre><code>'--summaryfile'</code></pre> 
 
-from the cmd line argument. 
+    from the cmd line argument. 
     
