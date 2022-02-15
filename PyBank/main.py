@@ -16,7 +16,7 @@ def Fin_analysis(filename,summary):
 
     # Creates an iterable "i" that we will use for error references.
         i = 0
-          
+        empty_lines = [] 
     # Starts the main loop:
         for line in f:
             i += 1 
@@ -63,13 +63,14 @@ def Fin_analysis(filename,summary):
                             profit_loss_low = [budget_item_match.group(1) ,int(budget_item_match.group(2))]
                 # First we check for a line we don't know what to do with:    
                 if not budget_item_match:
-                    # Next we skip the first row, where the header is expected anyway and we don't need those
+                    # Next we skip the first row, where the header is expected.
                     if i == 1:
                         pass
-                    # Next we check for an empty line or an empty line with whitespaces 
+                    # Next we check for an empty line OR an empty line with whitespaces 
                     # (which is why using line == '\n' would not comprehensively solve the issue).
                     elif len(line.strip()) == 0:
-                        print(f"Line # {i} is empty")
+                        empty_lines.append(i)
+                        
                     # Finally if there is still an issue, we error out and print the line with an issue, formatting instructions, and directions to user.
                     else:
                         print(f"Error on line # {i}: {line}")
@@ -92,6 +93,9 @@ def Fin_analysis(filename,summary):
             deltas.append(p_l_list[v] - p_l_list[v-1])
     average_deltas = (sum(deltas)/len(deltas))
 
+    if empty_lines:
+        print(f"Empty Line(s) #: {empty_lines}\n")
+    
     print("Financial Analysis")
     print("----------------------------")
     print(f"Total Months: {new_key}")
@@ -102,7 +106,7 @@ def Fin_analysis(filename,summary):
 
     if summary:
         print("----------------------------")
-        print("\ncreating summary file...")
+        print("\ncreating summary file\n...")
         with open("summaryfile.txt", "w") as f2:
             f2.write("Financial Analysis\n----------------------------\n")
             f2.write(f"Total Months: {new_key}\n")
@@ -111,7 +115,7 @@ def Fin_analysis(filename,summary):
             f2.write(f"Greatest Increase in Profits: {profit_loss_high[0]} (${profit_loss_high[1]})\n")
             f2.write(f"Greatest Decrease in Profits: {profit_loss_low[0]} (${profit_loss_low[1]})\n")
         f2.close()
-        print("done.")
+        print("done")
     return None 
 
 def main():
@@ -119,7 +123,6 @@ def main():
     # Make a list of command line arguments, omitting the [0] element
     # which is the script itself.
     args = sys.argv[1:]
-    print(args[1])
     if not args:
         print("usage: [--summaryfile] file [file...]")
         sys.exit(1)
