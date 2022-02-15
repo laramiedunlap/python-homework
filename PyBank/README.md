@@ -17,5 +17,9 @@
                             print("Please remove or reformat line, save the file, and retry")
                             sys.exit(1)</code></pre>
 
-* The user also can choose whether or not they want a summary file. To just run the output to the terminal, simply ommit the flag '--summaryfile' from the cmd line argument
+* The user can choose whether or not they want a summary file. To just run the output to the terminal, simply ommit the flag:          
+
+    '--summaryfile' 
+
+from the cmd line argument. 
     
