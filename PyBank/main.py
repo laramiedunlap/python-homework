@@ -39,7 +39,7 @@ def Fin_analysis(filename,summary):
                         elif ch.isdigit():
                             pass
                         else:
-                            print(f"Error on line # {i}: {line} -- {ch} is causing an error")
+                            print(f"Error on line # {i}: {line}--' {ch} '  has caused an error")
                             print(f"File must include 1 header row in first line, date in first column (MON-YEAR, ex: JAN-2001), and profit/loss in 2nd colummn without $ (ex: -189000)")
                             print("Please remove or reformat line, save the file, and retry")
                             sys.exit(1)
