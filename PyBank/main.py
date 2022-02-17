@@ -7,7 +7,7 @@ import re
 
 def Fin_analysis(filename,summary):
     """Given a filename and directions whether or not to create a summary file,
-        return the summary data and a summaryfile.txt if requested """
+        return the summary data and summaryfile.txt if requested """
     budget = {}
     profit_loss_total = 0
     profit_loss_high = []
@@ -43,6 +43,7 @@ def Fin_analysis(filename,summary):
                             print(f"File must include 1 header row in first line, date in first column (MON-YEAR, ex: JAN-2001), and profit/loss in 2nd colummn without $ (ex: -189000)")
                             print("Please remove or reformat line, save the file, and retry")
                             sys.exit(1)
+
                     # Now we want to start tracking some P/L data as it's coming in:
                     if profit_loss_total == 0:
                         profit_loss_total = int(budget_item_match.group(2))
@@ -61,7 +62,8 @@ def Fin_analysis(filename,summary):
                         #Tracks the most recent low mark for monthly p/l
                         elif profit_loss_low[-1] >= int(budget_item_match.group(2)):
                             profit_loss_low = [budget_item_match.group(1) ,int(budget_item_match.group(2))]
-                # First we check for a line we don't know what to do with:    
+
+                # Now we're checking for a line we don't know what to do with:    
                 if not budget_item_match:
                     # Next we skip the first row, where the header is expected.
                     if i == 1:
@@ -74,7 +76,8 @@ def Fin_analysis(filename,summary):
                     # Finally if there is still an issue, we error out and print the line with an issue, formatting instructions, and directions to user.
                     else:
                         print(f"Error on line # {i}: {line}")
-                        print(f"File must include 1 header row in FIRST LINE, date in first column (MON-YEAR, ex: JAN-2001), and profit/loss in 2nd colummn without $ (ex: -189000)")
+                        print(f"File must include 1 header row in FIRST LINE") 
+                        print(f"with date in first column (MON-YEAR, ex: JAN-2001), profit/loss in 2nd colummn without $ (ex: -189000)")
                         print("Please remove or reformat line, save the file, and retry")
                         sys.exit(1)
 
