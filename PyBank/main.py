@@ -5,7 +5,7 @@ import re
 # Create some data structures and variables for our program
 
 
-def Fin_analysis(filename,summary):
+def fin_analysis(filename,summary):
     """Given a filename and directions whether or not to create a summary file,
         return the summary data and summaryfile.txt if requested """
     budget = {}
@@ -23,7 +23,7 @@ def Fin_analysis(filename,summary):
             if i > 0:
                 
                 # Checks for a specific concantenation of 3 letters for month, 4 digits for year, a comma,
-                # Then everything after that in the line (which should only be numbers). 
+                # Then everything after that in the line (which SHOULD only be numbers, but we'll double check later). 
                 budget_item_match = re.search(r'(\w\w\w-\d\d\d\d),(.+)', line)
 
                 # The above is simple to work with but creates one issue. In the second group (.+), we just grab everything after the comma because
@@ -110,14 +110,14 @@ def Fin_analysis(filename,summary):
     if summary:
         print("----------------------------")
         print("\ncreating summary file\n...")
-        with open("summaryfile.txt", "w") as f2:
-            f2.write("Financial Analysis\n----------------------------\n")
-            f2.write(f"Total Months: {new_key}\n")
-            f2.write(f"Total: {profit_loss_total}\n")
-            f2.write(f"Average Change: ${round(average_deltas,2)}\n")
-            f2.write(f"Greatest Increase in Profits: {profit_loss_high[0]} (${profit_loss_high[1]})\n")
-            f2.write(f"Greatest Decrease in Profits: {profit_loss_low[0]} (${profit_loss_low[1]})\n")
-        f2.close()
+        with open("summaryfile.txt", "w") as summary_f:
+            summary_f.write("Financial Analysis\n----------------------------\n")
+            summary_f.write(f"Total Months: {new_key}\n")
+            summary_f.write(f"Total: {profit_loss_total}\n")
+            summary_f.write(f"Average Change: ${round(average_deltas,2)}\n")
+            summary_f.write(f"Greatest Increase in Profits: {profit_loss_high[0]} (${profit_loss_high[1]})\n")
+            summary_f.write(f"Greatest Decrease in Profits: {profit_loss_low[0]} (${profit_loss_low[1]})\n")
+        summary_f.close()
         print("done")
     return None 
 
@@ -138,7 +138,7 @@ def main():
     # Set the filename variable to the user input file
     filename = args[0]
     # Call the fin_analysis function
-    Fin_analysis(filename,summary)
+    fin_analysis(filename,summary)
 
 
 
