@@ -82,16 +82,15 @@ def fin_analysis(filename,summary):
                     elif len(line.strip()) == 0:
                         empty_lines.append(i)
                         
-                    # Finally if there is still an issue, we error out and print the line with an issue, formatting instructions, and directions to user.
+                    # Finally if there is still an issue, this whole line has formatting problems. So add it to our error_dict:
                     else:
                         error_dict[i] = [line, 'multiple errors']
 
                         
 
-    #Now we need to calculate the proper average. A dictionary isn't sorted inherently, but since we iterated new_key, all the key-value pairs match up with the 
-    #monthly progression of the data. So step 1) grab all the values and turn them into a list:
-    budget_items_object = budget.values()
-    budget_tuples_list = list(budget_items_object)
+    # Now we need to calculate the proper average. A dictionary isn't sorted inherently, but since we iterated new_key, all the key-value pairs match up
+    # With the monthly progression of the data. So step 1) grab all the values from the budget dict and turn them into a list of:
+    budget_tuples_list = list(budget.values())
     p_l_list = []
     deltas = []
     #step 2) loop through all the tuples and grab the profit from each month, creating a list of all the SEQUENTIAL CHANGES:
