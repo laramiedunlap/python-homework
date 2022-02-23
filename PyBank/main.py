@@ -18,7 +18,9 @@ def fin_analysis(filename,summary):
 
     # Creates an iterable "i" that we will use for error references.
         i = 0
-        empty_lines = [] 
+        empty_lines = []
+        error_dict = {}
+        error_condition = False
     # Starts the main loop:
         for line in f:
             i += 1 
@@ -34,17 +36,22 @@ def fin_analysis(filename,summary):
                 if budget_item_match:
                     # Set a variable equal to our P/l as a string object, so that we can iterate through it real quick and make sure it fits the right format
                     check_pl_data = budget_item_match.group(2)
+                    error_condition = False
                     # Here we loop through each 'ch' character in the string check_data. If the ch is a negative sign or a digit, we pass. 
                     for ch in check_pl_data:
                         if ch == "-":
                             pass
                         elif ch.isdigit():
                             pass
+                        # Here we know there is an error, but there could be multiple errors on the same line
+                        elif error_condition == False:
+                            error_condition = True
+                            error_character = ch 
+                            error_dict[i] = [line, error_character]
+                        # Now we know there are multiple errors, so we can just add them to the "ch" string
                         else:
-                            print(f"Error on line # {i}: {line}--' {ch} '  has caused an error")
-                            print(f"File must include 1 header row in first line, date in first column (MON-YEAR, ex: JAN-2001), and profit/loss in 2nd colummn without $ (ex: -189000)")
-                            print("Please remove or reformat line, save the file, and retry")
-                            sys.exit(1)
+                            error_character += ch
+                            error_dict[i] = [line, error_character]
 
                     # Now we want to start tracking some P/L data as it's coming in:
                     if profit_loss_total == 0:
@@ -53,7 +60,7 @@ def fin_analysis(filename,summary):
                         profit_loss_low = [budget_item_match.group(1) ,int(budget_item_match.group(2))]
                         new_key = 1
                         budget[new_key] = (budget_item_match.group(1),int(budget_item_match.group(2)))
-                    else:
+                    elif error_condition == False:
                         # At this point, I want to force our budget{} keys to be sequential regardless of how many blank lines there are:
                         new_key += 1 
                         budget[new_key] = (budget_item_match.group(1),int(budget_item_match.group(2)))
@@ -77,11 +84,9 @@ def fin_analysis(filename,summary):
                         
                     # Finally if there is still an issue, we error out and print the line with an issue, formatting instructions, and directions to user.
                     else:
-                        print(f"Error on line # {i}: {line}")
-                        print(f"File must include 1 header row in FIRST LINE") 
-                        print(f"with date in first column (MON-YEAR, ex: JAN-2001), profit/loss in 2nd colummn without $ (ex: -189000)")
-                        print("Please remove or reformat line, save the file, and retry")
-                        sys.exit(1)
+                        error_dict[i] = [line, 'multiple errors']
+
+                        
 
     #Now we need to calculate the proper average. A dictionary isn't sorted inherently, but since we iterated new_key, all the key-value pairs match up with the 
     #monthly progression of the data. So step 1) grab all the values and turn them into a list:
@@ -99,7 +104,16 @@ def fin_analysis(filename,summary):
     average_deltas = (sum(deltas)/len(deltas))
 
     if empty_lines:
+        print("\n")
         print(f"Empty Line(s) #: {empty_lines}\n")
+    
+    if error_dict.keys():
+        for i in error_dict:
+            print(f"Error on line # {i}: {error_dict[i]}' {error_dict[i][1]} ' caused an error")
+        print(f"File must include 1 header row in first line")
+        print(f"Date in first column (MON-YEAR, ex: JAN-2001)")
+        print(f"Profit/loss in 2nd colummn without $ (ex: -189000)")
+        print("Please remove or reformat line(s), save the file, and retry\n")
     
     print("Financial Analysis")
     print("----------------------------")
@@ -142,7 +156,7 @@ def main():
     # Call the fin_analysis function
     fin_analysis(filename,summary)
     
-
+    
 
 if __name__ == '__main__':
   main()
