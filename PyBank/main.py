@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-
+from pathlib import Path
 # Create some data structures and variables for our program
 
 
@@ -12,6 +12,8 @@ def fin_analysis(filename,summary):
     profit_loss_total = 0
     profit_loss_high = []
     profit_loss_low = []
+
+    
     with open(filename, mode = 'r') as f:
 
     # Creates an iterable "i" that we will use for error references.
@@ -134,12 +136,12 @@ def main():
     summary = False
     if args[0] == "--summaryfile":
         summary = True
-        del args[0]
+        
     # Set the filename variable to the user input file
-    filename = args[0]
+    filename = args[1]
     # Call the fin_analysis function
     fin_analysis(filename,summary)
-
+    
 
 
 if __name__ == '__main__':
