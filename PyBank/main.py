@@ -4,7 +4,6 @@ import re
 from pathlib import Path
 # Create some data structures and variables for our program
 
-
 def fin_analysis(filename,summary):
     """Given a filename and directions whether or not to create a summary file,
         return the summary data and summaryfile.txt if requested """
@@ -12,9 +11,9 @@ def fin_analysis(filename,summary):
     profit_loss_total = 0
     profit_loss_high = []
     profit_loss_low = []
-
+    filepath = Path(filename)
     
-    with open(filename, mode = 'r') as f:
+    with open(filepath, mode = 'r') as f:
 
     # Creates an iterable "i" that we will use for error references.
         i = 0
