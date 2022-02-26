@@ -104,6 +104,9 @@ def ramen_report(csv_menu_filename, csv_sales_filename, report_request):
     # If the user wants a report file, we make it for them and skip printing to the output:
     if report_request:
         with open("report.txt","w") as report_file:
+            for item in report:
+                print(f"{item} {report[item]}")
+                print("\n")
             print(f"Creating report file")
             print("...")
             report_file.write(f"-----REPORT-----")
