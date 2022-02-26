@@ -9,13 +9,13 @@ import sys
 # We need to create INDIVIDUAL DICTIONARIES the FIRST TIME
 # We come across a NOVEL item (something we haven't sold before). 
 
-# If the item sold is NOT something we sell, then the user needs to update the menu (or fire a waiter)
+# If the item sold is NOT something we sell, then the user needs to update the menu
 
-# Because the MENU could be large (think Applebee's), we don't need to loop through the entire menu to find a sold item;
+# Because the MENU could be large, we don't need to loop through the entire menu to find a sold item;
 # As soon as we find a sold item that EQUALS(==) a menu item, we can stop searching.
 
-# So for the first time an item is sold, we're going to run a function called 'match_price_cost_profit' -- tedious but descriptive. 
-# After running the function, the next time that same item is sold, our program remembers the PRICE, COST, and PROFIT -- helpful!
+# So for the first time an item is sold, we're going to run a function called 'match_price_cost_profit'. 
+# After running the function, the next time that same item is sold, our program remembers the PRICE, COST, and PROFIT for that item -- helpful!
 
 # Additionally, this function creates the INDIVIDUAL (nested) DICTIONARY inside of the REPORT DICTIONARY, with the USER-KEYS we'll define later  
 
@@ -47,8 +47,8 @@ def match_price_cost_profit(item_sold, _menu, out_dict, user_keys):
     return None
 
 # So now we have containers for all the data we need, IN THE RIGHT PLACE, and we have {price, cost, profit} data for each item.
-# However, our REPORT should only include TOTAL revenue, cost, and profit. So we'll use this function to remove those per item values 
-# From our INDIVIDUAL DICTIONARY:
+# However, our REPORT should only include TOTAL revenue, cost, and profit. So we'll use this function to remove those per-item values 
+# From our INDIVIDUAL (nested) DICTIONARY:
 
 def remove_keys(dict,keys_to_remove):
     """Remove a list of keys from dict, return dict"""
@@ -86,7 +86,7 @@ def ramen_report(csv_menu_filename, csv_sales_filename, report_request):
         quantity = int(sale[-2])
         # If we've already sold this item, we want to track some data for our REPORT
         if sale_item in report.keys():
-            #dict_pointer just points to the correct dictionary (which is a key inside REPORT) inside of this dictionary... very meta
+            #dict_pointer just points to the correct dictionary inside of this dictionary. Put here for readability.
             dict_pointer = report[sale_item]
             dict_pointer["01-count"] += quantity
             dict_pointer["02-revenue"] += dict_pointer["--price"] * quantity
@@ -101,7 +101,7 @@ def ramen_report(csv_menu_filename, csv_sales_filename, report_request):
     for sales_items in report:
         remove_keys(report[sales_items],["--price","--cost","--profit"])
     
-    # If the user wants a report file, we make it for them:
+    # If the user wants a report file, we make it for them and skip printing to the output:
     if report_request:
         with open("report.txt","w") as report_file:
             print(f"Creating report file")

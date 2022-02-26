@@ -83,7 +83,7 @@ def fin_analysis(filename,summary):
                         
                     # Finally if there is still an issue, this whole line has formatting problems. So add it to our error_dict:
                     else:
-                        error_dict[i] = [line, 'multiple errors']
+                        error_dict[i] = [line, 'multiple issues']
 
                         
 
@@ -101,13 +101,20 @@ def fin_analysis(filename,summary):
             deltas.append(p_l_list[v] - p_l_list[v-1])
     average_deltas = (sum(deltas)/len(deltas))
 
+    # The following are print statements:
+
+    # returns empty lines to the user:
     if empty_lines:
         print("\n")
         print(f"Empty Line(s) #: {empty_lines}\n")
+    # Here is a fix for the ugly looking '\n' on the tail of every error line:
     
     if error_dict.keys():
+        
+        
         for i in error_dict:
-            print(f"Error on line # {i}: {error_dict[i]}' {error_dict[i][1]} ' caused an error")
+            nl_del = re.sub(r'$\n','',error_dict[i][0]) # (this just gets rid of the \n tail on the line)
+            print(f"Error on line # {i}: {error_dict[i][0]}' {error_dict[i][1]} ' caused an error")
         print(f"File must include 1 header row in first line")
         print(f"Date in first column (MON-YEAR, ex: JAN-2001)")
         print(f"Profit/loss in 2nd colummn without $ (ex: -189000)")
