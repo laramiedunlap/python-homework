@@ -148,9 +148,9 @@ def main():
     summary = False
     if args[0] == "--summaryfile":
         summary = True
-        
+        del args [0]
     # Set the filename variable to the user input file
-    filename = args[1]
+    filename = args[0]
     # Call the fin_analysis function
     fin_analysis(filename,summary)
     
