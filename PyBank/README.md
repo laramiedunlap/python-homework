@@ -8,7 +8,9 @@
 
     <pre><code>'python main.py --summaryfile budget_data.csv'</code></pre>
 
-* I use Juptyer Lab (.ipynb) notebook files to test code blocks then put it all together in a .py file that can be ran from the command line. Sometimes the two are not mirror matches of each other. I do not include command line parsing code in the .ipynb files as those are easiest to run inside the JupyterLab notebook or VS studio. However it could be easily copied over from the python file.
+* I use Juptyer Lab (.ipynb) notebook files to test code blocks then put it all together in a .py file that can be ran from the command line. Sometimes the two are not mirror matches of each other. 
+
+* I do not include command line parsing code in main.ipynb files as those are better suited to run inside a JupyterLab notebook or VS.
 
  
 
